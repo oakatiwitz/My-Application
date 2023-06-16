@@ -97,6 +97,28 @@ def Home_page():
     label3 = customtkinter.CTkLabel(pic_frame, font=('Arial', 12.5),text="Laziness makes things Easier",fg_color = "#585858",
                                     bg_color="#585858", text_color= 'white')
     label3.place(relx = 0.5, rely = 0.85, anchor ='center')
+
+def Memo_page():
+    # Create Frame
+    pic_frame = customtkinter.CTkFrame(master = main_frame, width=400, height= 375, fg_color= '#585858', corner_radius=7)
+    pic_frame.place(relx = 0.5, rely = 0.5, anchor = 'center')
+    
+    # Load the image file
+    image = customtkinter.CTkImage(Image.open("PICTURE.jpg"), size=(114.4,143.0))
+
+    # Create a label widget with the image as the background
+    label = customtkinter.CTkLabel(master= pic_frame, image=image, text='')
+
+    # Set the size of the label to match the size of the image
+    label.place(relx = 0.5, rely = 0.35, anchor = 'center')
+
+    label2 = customtkinter.CTkLabel(pic_frame, font=('Arial', 12, 'bold' ,'italic'),text="ATIWIT RATTANAKAN",fg_color = "#585858",
+                                    bg_color="#3E3E3E", text_color= 'white')
+    label2.place(relx = 0.5, rely = 0.7, anchor ='center')
+
+    label3 = customtkinter.CTkLabel(pic_frame, font=('Arial', 15),text="ก็ได้ ก็ได้ เซ้าซี้จริง",fg_color = "#585858",
+                                    bg_color="#585858", text_color= 'white')
+    label3.place(relx = 0.5, rely = 0.85, anchor ='center')
     
 def S2oE_page():
     # ADD Label
@@ -524,7 +546,6 @@ def Type_page():
             for i in _data:
                 if 'SPARE' not in i.upper():
                     pyautogui.typewrite(i)
-                #pyautogui.press('down')
                 pyautogui.press('enter')        
             print("Data Typed!")
             State = True
@@ -552,7 +573,7 @@ def Type_page():
                 s += 1
                 if 'SPARE' not in i.upper():
                     pyautogui.typewrite(i)
-                pyautogui.press('down')
+                pyautogui.press('enter')  
 
                 # Ask for every typing 16 line
                 if s%16 == 0 and s != len(_data):
@@ -580,10 +601,11 @@ def Type_page():
         # Condition
         # For Module
         if  mode_var.get() == '1':
+
             if func_var.get() == '1':
                 # Collect the data
                 data = extractData() 
-            
+    
                 # Show the alert
                 messagebox.showinfo("COMMAND", "Save data from clipboard: Done!")
 
@@ -593,7 +615,12 @@ def Type_page():
                 # The operation is done
                 print("Operation done")
 
+                # Set the var of mode and function
+                mode_var.set("1")
+                func_var.set("1")
+
             elif func_var.get() == '2':
+
                 data2 = extractData2()
 
                 # Show the alert
@@ -605,6 +632,10 @@ def Type_page():
                 # The operation is done
                 print("Operation done")
 
+                # Set the var of mode and function
+                mode_var.set("1")
+                func_var.set("2")
+
             else:
                 # The operation is done
                 print("Operation is interrupted")
@@ -614,7 +645,9 @@ def Type_page():
 
         # For Register
         elif mode_var.get() == '2':
+
             if func_var.get() == '1':
+
                 # Collect the data
                 data = extractData() 
     
@@ -627,7 +660,12 @@ def Type_page():
                 # The operation is done
                 print("Operation done")
 
+                # Set the var of mode and function
+                mode_var.set("2")
+                func_var.set("1")
+
             elif func_var.get() == '2':
+
                 data2 = extractData2()
 
                 # Show the alert
@@ -638,6 +676,10 @@ def Type_page():
 
                 # The operation is done
                 print("Operation done")
+
+                # Set the var of mode and function
+                mode_var.set("2")
+                func_var.set("2")
 
             else:
                 # The operation is done
@@ -650,7 +692,7 @@ def Type_page():
                 print("Operation is interrupted")
 
                 # Alert respone 
-                messagebox.showinfo("COMMAND", "Please choose the types of modes!")   
+                messagebox.showinfo("COMMAND", "Please choose the types of modes!")  
 
     def stop_operation():
         # Show the alert
@@ -660,8 +702,10 @@ def Type_page():
         # Reset State
         global State, mode_var, func_var
         State = False
-        mode_var = StringVar()
-        func_var = StringVar()
+        #mode_var = StringVar()
+        #func_var = StringVar()
+        mode_var.set("")
+        func_var.set("")
 
 
     # Add Ratio Button for Mode
@@ -728,8 +772,9 @@ file_path2 = ''
 def hide_indicate():
     PDF_indicate.configure(bg_color = '#3E3E3E')
     Type_indicate.configure(bg_color = '#3E3E3E')
-    Home_indicate.configure(bg_color = '#3E3E3E')
     S2_indicate.configure(bg_color = '#3E3E3E')
+    Memo_indicate.configure(bg_color = '#3E3E3E')
+    Home_indicate.configure(bg_color = '#3E3E3E')
 
 def delete_pages():
     for frame in main_frame.winfo_children():
@@ -773,18 +818,6 @@ Typebutton.place(relx=0.5, rely=0.25 , anchor='center')
 Type_indicate = customtkinter.CTkLabel(option_frame, text='', bg_color= '#3E3E3E')
 Type_indicate.place(relx=0, rely=0.217, width = 5, height=37)
 
-Home_button = customtkinter.CTkButton(option_frame, text="HOME",
-                                        font = ("Arial", 15, 'bold'),
-                                        width=40,
-                                        height=16,
-                                        bg_color="#3E3E3E",
-                                        fg_color='#3E3E3E',
-                                        border_width = 2,
-                                        command=lambda: indicate(Home_indicate, Home_page))
-Home_button.place(relx=0.5, rely=0.8 , anchor='center')
-Home_indicate = customtkinter.CTkLabel(option_frame, text='', bg_color= '#3E3E3E')
-Home_indicate.place(relx=0, rely=0.76, width = 5, height=37)
-
 S2_button = customtkinter.CTkButton(option_frame, text="S2oE BITLIST",
                                         font = ("Arial", 15, 'bold'),
                                         width=40,
@@ -797,5 +830,32 @@ S2_button.place(relx=0.5, rely=0.38 , anchor='center')
 
 S2_indicate = customtkinter.CTkLabel(option_frame, text='', bg_color= '#3E3E3E')
 S2_indicate.place(relx=0, rely=0.347, width = 5, height=37)
+
+Memo_button = customtkinter.CTkButton(option_frame, text="MEMORY",
+                                        font = ("Arial", 15, 'bold'),
+                                        width=40,
+                                        height=16,
+                                        bg_color="#3E3E3E",
+                                        fg_color='#3E3E3E',
+                                        border_width = 2,
+                                        command=lambda: indicate(Memo_indicate, Memo_page))
+Memo_button.place(relx=0.5, rely=0.51 , anchor='center')
+
+Memo_indicate = customtkinter.CTkLabel(option_frame, text='', bg_color= '#3E3E3E')
+Memo_indicate.place(relx=0, rely=0.477, width = 5, height=37)
+
+
+Home_button = customtkinter.CTkButton(option_frame, text="HOME",
+                                        font = ("Arial", 15, 'bold'),
+                                        width=40,
+                                        height=16,
+                                        bg_color="#3E3E3E",
+                                        fg_color='#3E3E3E',
+                                        border_width = 2,
+                                        command=lambda: indicate(Home_indicate, Home_page))
+Home_button.place(relx=0.5, rely=0.8 , anchor='center')
+
+Home_indicate = customtkinter.CTkLabel(option_frame, text='', bg_color= '#3E3E3E')
+Home_indicate.place(relx=0, rely=0.76, width = 5, height=37)
 
 root.mainloop()
