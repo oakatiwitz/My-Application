@@ -213,6 +213,7 @@ def S2oE_page():
             # Checking they have OUTPUT STATE
             if session and 'OUTPUT_STATE' in line:
                 # Set they have OUTPUT STATE 
+                input = False
                 output = True 
                 # Current OUTPUT STATE number ([:-1] means delete '\n')
                 current_OUTPUT_STATE = line[20:-1]
@@ -221,6 +222,7 @@ def S2oE_page():
             if output and ' NAME ' in line:
                 # Save the Mnemonics name 
                 text_output = line[17:-2]
+                
                 # Add the Mnemonics in the current session in dict total_session_variable
                 total_session_variable[Name][int(current_OUTPUT_STATE)-1] = text_output
                 
